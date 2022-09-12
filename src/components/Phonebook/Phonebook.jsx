@@ -2,17 +2,18 @@ import ContactForm from './ContactForm';
 import Filter from './Filter';
 import ContactList from './ContactList';
 import styled from 'styled-components';
+import { Loader } from '../Loader/loader';
 import toast, { Toaster }  from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { addContact, deleteContact, fetchContacts } from '../../redux/contacts/contacts-operation';
 import { setFilter } from 'redux/filter/filter-slice';
-import { getFilter, visibleContacts} from '../../redux/selectors';
+import { getFilter, visibleContacts, getLoaderStatus} from '../../redux/selectors';
 
 export default function Phonebook() {
   const contacts = useSelector(visibleContacts);  
   const filter = useSelector(getFilter);
-  //  const isLoaderActive = useSelector(getLoaderStatus);
+   const isLoaderActive = useSelector(getLoaderStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function Phonebook() {
       <ContactForm onSubmit={onAddContact}/>
       <h2>Contacts</h2>
       <Filter value={filter} onChange={onSetFilter} />
+      {isLoaderActive && <Loader />}
       <ContactList contacts={contacts} onDeleteContact={onRemoveContact} />
       <Toaster />
     </SectionPhonebook>);        
