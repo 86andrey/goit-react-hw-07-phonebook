@@ -43,7 +43,7 @@ export default function ContactForm({onSubmit}) {
                             onChange={onInputNumberChange}
                         />
                         </Label>                    
-                    <Btn type="submit">Add contact</Btn>
+                    <Btn type="submit" disabled={!name || !number}>Add contact</Btn>
                 </Form>);
 };
 
@@ -72,10 +72,11 @@ const Btn = styled.button`
     display: flex;
     font-weight: 400;
     padding: 12px 12px;
-    :hover, :focus {
-  color: white;
-  background-color: greenyellow;
-}`;
+//     :hover, :focus {
+//   color: white;
+//   background-color: greenyellow;
+// }
+`;
 
 
 
