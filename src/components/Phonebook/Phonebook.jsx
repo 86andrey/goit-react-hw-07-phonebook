@@ -4,17 +4,20 @@ import ContactList from './ContactList';
 import styled from 'styled-components';
 import toast, { Toaster }  from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { addContact, removeContact } from 'redux/contacts/contacts-slice';
+import { useEffect } from 'react';
+import { addContact, deleteContact, fetchContacts } from '../../redux/contacts/contacts-operation';
 import { setFilter } from 'redux/filter/filter-slice';
-import { getFilterContact } from 'redux/contacts/contacts-selector';
-import { getFilter } from 'redux/filter/filter-selector';
-
+import { getFilter, visibleContacts} from '../../redux/selectors';
 
 export default function Phonebook() {
-  const contacts = useSelector(getFilterContact);  
+  const contacts = useSelector(visibleContacts);  
   const filter = useSelector(getFilter);
+  //  const isLoaderActive = useSelector(getLoaderStatus);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const onAddContact = (payload) => {
      const isContact = contacts.find(
@@ -28,7 +31,7 @@ export default function Phonebook() {
   };
 
   const onRemoveContact = (payload) => {
-    dispatch(removeContact(payload))
+    dispatch(deleteContact(payload))
   };
 
   const onSetFilter = (event) => {
